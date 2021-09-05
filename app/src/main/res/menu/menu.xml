@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/filtreDate"
+        android:title="Filtre par Date"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/filtreLieu"
+        android:title="Filtre par Lieu"
+        app:showAsAction="never"/>
+</menu>
