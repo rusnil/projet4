@@ -1,25 +1,32 @@
 package com.example.mareu.model;
 
+import java.util.Date;
+
 public class Reunion {
 
-    private String date;
-    private String lieu;
-    private String email;
-    private String sujet;
+    String sujet, lieu, email;
+    Date mDate;
 
-    public Reunion(String date, String lieu, String email, String sujet) {
-        this.date = date;
+    public Reunion(String lieu, String email, String sujet) {
         this.lieu = lieu;
         this.email = email;
         this.sujet = sujet;
+        this.mDate = new Date();
     }
 
-    public String getDate() {
-        return date;
+    public Reunion(String lieu, String email, String sujet, Date date) {
+        this.lieu = lieu;
+        this.email = email;
+        this.sujet = sujet;
+        mDate = date;
     }
 
-    public void setDate(String date) {
-        this.date = date;
+    public String getSujet() {
+        return sujet;
+    }
+
+    public void setSujet(String sujet) {
+        this.sujet = sujet;
     }
 
     public String getLieu() {
@@ -38,11 +45,11 @@ public class Reunion {
         this.email = email;
     }
 
-    public String getSujet() {
-        return sujet;
+    public Date getDate() {
+        return mDate;
     }
 
-    public void setSujet(String sujet) {
-        this.sujet = sujet;
+    public void setDate(Date date) {
+        mDate = date;
     }
 }

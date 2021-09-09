@@ -2,26 +2,33 @@ package com.example.mareu.ui;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.LinearLayout;
 
 import com.example.mareu.di.DI;
+import com.example.mareu.model.Reunion;
 import com.example.mareu.service.MareuApiService;
 import com.example.maru.R;
 import com.example.maru.databinding.ActivityMainBinding;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.zip.Inflater;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     private ActivityMainBinding binding;
-    private MareuApiService apiService = DI.getMareuApiService();
+    private List<Reunion> mReunionList;
+    private MareuApiService mMareuApiService = DI.getMareuApiService();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +37,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         View view = binding.getRoot();
         setContentView(view);
         setButton();
+        initList();
+        initRecycler();
+    }
+
+    private void initRecycler() {
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        binding.recyclerview.setLayoutManager(layoutManager);
+        RecylerViewAdapter recylerViewAdapter = new RecylerViewAdapter(mReunionList);
+        binding.recyclerview.setAdapter(recylerViewAdapter);
+    }
+
+    private void initList() {
+        mReunionList = mMareuApiService.getReunionList();
     }
 
     private void setButton() {

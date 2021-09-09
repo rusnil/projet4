@@ -3,6 +3,7 @@ package com.example.mareu.service;
 import com.example.mareu.model.Reunion;
 import com.example.mareu.model.Salle;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class DummyMareuApiService implements MareuApiService {
