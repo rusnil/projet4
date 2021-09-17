@@ -1,33 +1,29 @@
 package com.example.mareu.ui;
 
-import android.renderscript.ScriptGroup;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.mareu.di.DI;
 import com.example.mareu.model.Reunion;
-import com.example.mareu.service.MareuApiService;
 import com.example.maru.R;
 
 import java.text.SimpleDateFormat;
 import java.util.List;
 
-public class RecylerViewAdapter extends RecyclerView.Adapter<RecylerViewAdapter.ViewHolder> {
+public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
 
-    private  List<Reunion> mReunion;
-    private MareuApiService mMareuApiService = DI.getMareuApiService();
+    private final List<Reunion> mReunion;
+    private final ReunionEvent mReunionEvent;
 
-
-    public RecylerViewAdapter(List<Reunion> reunionList) {
+    public RecyclerViewAdapter(List<Reunion> reunionList, ReunionEvent reunionEvent) {
         this.mReunion = reunionList;
+        this.mReunionEvent = reunionEvent;
     }
 
     @NonNull
@@ -41,20 +37,13 @@ public class RecylerViewAdapter extends RecyclerView.Adapter<RecylerViewAdapter.
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/mm/yyyy");
-
         Reunion reunion = mReunion.get(position);
-        holder.date.setText(dateFormat.format(reunion.getDate()));
+        holder.date.setText(reunion.getHeure());
         holder.lieu.setText(reunion.getLieu());
         holder.email.setText(reunion.getEmail());
         holder.sujet.setText(reunion.getSujet());
 
-        holder.deleteReu.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mMareuApiService.deleteReunion(reunion);
-            }
-        });
+        holder.deleteReu.setOnClickListener(view -> mReunionEvent.delete(reunion));
     }
 
     @Override

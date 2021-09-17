@@ -11,6 +11,7 @@ public abstract class MareuGenerator {
 
     public static List<Salle> SALLE_LIST = Arrays.asList(
             new Salle("Salle 1"),
+            new Salle("Salle 2"),
             new Salle("Salle 3"),
             new Salle("Salle 4"),
             new Salle("Salle 5"),

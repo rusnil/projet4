@@ -3,7 +3,8 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="app/src/main/res/layout/activity_add_reunion.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/ic_baseline_add_24.xml" value="0.2625" />
+        <entry key="app/src/main/res/layout/activity_add_reunion.xml" value="0.335" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.1" />
         <entry key="app/src/main/res/layout/list_reunion.xml" value="0.25" />
         <entry key="app/src/main/res/layout/menu.xml" value="0.24635416666666668" />

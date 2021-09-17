@@ -1,3 +1,24 @@
 <resources>
     <string name="app_name">maréu</string>
+    <string name="dialog_title">Attention</string>
+    <string name="dialog_message">Voulez-vous le supprimer ?</string>
+    <string name="ok">Oui</string>
+    <string name="cancel">Non</string>
+    <string name="pick_salle">Choisir la salle</string>
+    <string name="email">Email</string>
+    <string name="invalid_email">Email invalide</string>
+    <string name="pick_date">Choisir une heure</string>
+    <string name="pick_sujet">Choisir un sujet</string>
+    <string-array name="salle_item">
+        <item>Room 1</item>
+        <item>Room 2</item>
+        <item>Room 3</item>
+        <item>Room 4</item>
+        <item>Room 5</item>
+        <item>Room 6</item>
+        <item>Room 7</item>
+        <item>Room 8</item>
+        <item>Room 9</item>
+        <item>Room 10</item>
+    </string-array>
 </resources>

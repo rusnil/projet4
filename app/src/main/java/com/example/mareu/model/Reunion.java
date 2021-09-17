@@ -1,24 +1,18 @@
 package com.example.mareu.model;
 
+import android.widget.Button;
+
 import java.util.Date;
 
 public class Reunion {
 
-    String sujet, lieu, email;
-    Date mDate;
+    String sujet, lieu, email, heure;
 
-    public Reunion(String lieu, String email, String sujet) {
+    public Reunion(String lieu, String email, String sujet, String heure) {
         this.lieu = lieu;
         this.email = email;
         this.sujet = sujet;
-        this.mDate = new Date();
-    }
-
-    public Reunion(String lieu, String email, String sujet, Date date) {
-        this.lieu = lieu;
-        this.email = email;
-        this.sujet = sujet;
-        mDate = date;
+        this.heure = heure;
     }
 
     public String getSujet() {
@@ -45,11 +39,11 @@ public class Reunion {
         this.email = email;
     }
 
-    public Date getDate() {
-        return mDate;
+    public String getHeure() {
+        return heure;
     }
 
-    public void setDate(Date date) {
-        mDate = date;
+    public void setHeure(String heure) {
+        this.heure = heure;
     }
 }

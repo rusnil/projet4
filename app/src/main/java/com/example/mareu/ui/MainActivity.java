@@ -1,30 +1,26 @@
 package com.example.mareu.ui;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.LinearLayout;
 
 import com.example.mareu.di.DI;
 import com.example.mareu.model.Reunion;
 import com.example.mareu.service.MareuApiService;
 import com.example.maru.R;
 import com.example.maru.databinding.ActivityMainBinding;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.zip.Inflater;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener, ReunionEvent {
 
     private ActivityMainBinding binding;
     private List<Reunion> mReunionList;
@@ -37,19 +33,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         View view = binding.getRoot();
         setContentView(view);
         setButton();
-        initList();
         initRecycler();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        initList();
     }
 
     private void initRecycler() {
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         binding.recyclerview.setLayoutManager(layoutManager);
-        RecylerViewAdapter recylerViewAdapter = new RecylerViewAdapter(mReunionList);
-        binding.recyclerview.setAdapter(recylerViewAdapter);
     }
 
     private void initList() {
         mReunionList = mMareuApiService.getReunionList();
+        RecyclerViewAdapter recyclerViewAdapter = new RecyclerViewAdapter(mReunionList, this);
+        binding.recyclerview.setAdapter(recyclerViewAdapter);
     }
 
     private void setButton() {
@@ -75,8 +76,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     public void onClick(View view) {
-        if (view == binding.fabAdd) {
             startActivity(new Intent(this, AddReunionActivity.class));
-        }
+    }
+
+    @Override
+    public void delete(Reunion reunion) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this  );
+
+        builder.setMessage(R.string.dialog_message)
+                .setTitle(R.string.dialog_title);
+        builder.setPositiveButton(R.string.ok, (dialog, id) -> {
+            mMareuApiService.deleteReunion(reunion);
+            initList();
+        });
+        builder.setNegativeButton(R.string.cancel, (dialog, id) -> {
+            // User cancelled the dialog
+        });
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 }
