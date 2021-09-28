@@ -4,6 +4,7 @@ import com.example.mareu.model.Reunion;
 import com.example.mareu.model.Salle;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public class DummyMareuApiService implements MareuApiService {
@@ -32,12 +33,31 @@ public class DummyMareuApiService implements MareuApiService {
     }
 
     @Override
-    public List<Reunion> getFiltreDate() {
+    public List<Reunion> getFiltreHeure() {
         return null;
     }
 
     @Override
-    public List<Reunion> getFiltreLieu() {
-        return null;
+    public List<Reunion> getFiltreSalle(String salle) {
+
+        List<Reunion> filtreSalle = new ArrayList<>();
+        for (Reunion reunion: mReunionList) {
+            if (reunion.getLieu().equals(salle)) {
+                filtreSalle.add(reunion);
+            }
+        }
+        return filtreSalle;
+    }
+
+    @Override
+    public boolean checkReunionDispo(String lieu, Calendar dateDebut) {
+        for (Reunion reunion:mReunionList) {
+            if (lieu.equals(reunion.getLieu())) {
+                if (reunion.getDebut().before(dateDebut) && reunion.getFin().after(dateDebut)) {
+                    return  false;
+                }
+            }
+        }
+        return true;
     }
 }

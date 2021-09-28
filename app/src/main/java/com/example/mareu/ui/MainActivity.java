@@ -1,16 +1,19 @@
 package com.example.mareu.ui;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
+import static java.util.Calendar.HOUR_OF_DAY;
+import static java.util.Calendar.MINUTE;
 
+import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.mareu.di.DI;
 import com.example.mareu.model.Reunion;
@@ -23,8 +26,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, ReunionEvent {
 
     private ActivityMainBinding binding;
-    private List<Reunion> mReunionList;
-    private MareuApiService mMareuApiService = DI.getMareuApiService();
+    private final MareuApiService mMareuApiService = DI.getMareuApiService();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +41,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onResume() {
         super.onResume();
-        initList();
+        initList(mMareuApiService.getReunionList());
     }
 
     private void initRecycler() {
@@ -47,9 +49,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         binding.recyclerview.setLayoutManager(layoutManager);
     }
 
-    private void initList() {
-        mReunionList = mMareuApiService.getReunionList();
-        RecyclerViewAdapter recyclerViewAdapter = new RecyclerViewAdapter(mReunionList, this);
+    private void initList(List<Reunion> reunions) {
+        RecyclerViewAdapter recyclerViewAdapter = new RecyclerViewAdapter(reunions, this);
         binding.recyclerview.setAdapter(recyclerViewAdapter);
     }
 
@@ -65,14 +66,45 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.filtreDate:
-            case R.id.filtreLieu:
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int itemId = item.getItemId();
+        if (itemId == R.id.filtreHeure) {
+            filtreHeure();
+            return true;
+        } else if (itemId == R.id.filtreSalle) {
+            filtreSalle();
+            return true;
+        } else if (itemId == R.id.filtreReset) {
+            filtreReset();
+            return true;
         }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void filtreReset() {
+        initList(mMareuApiService.getReunionList());
+    }
+
+    public void filtreHeure() {
+        TimePickerDialog.OnTimeSetListener timeSetListener = (view, hourOfDay, minute) -> {
+
+        };
+        TimePickerDialog timePickerDialog = new TimePickerDialog(this, timeSetListener, HOUR_OF_DAY, MINUTE, true);
+        timePickerDialog.show();
+    }
+
+    private void filtreSalle() {
+        String[] listSalle = getResources().getStringArray(R.array.salle_item);
+
+        AlertDialog.Builder mBuilder = new AlertDialog.Builder(this);
+        mBuilder.setTitle(R.string.pick_salle);
+        mBuilder.setSingleChoiceItems(listSalle, -1, (dialogInterface, which) -> {
+            dialogInterface.dismiss();
+            initList(mMareuApiService.getFiltreSalle(listSalle[which]));
+        });
+        AlertDialog alert = mBuilder.create();
+        alert.show();
+
     }
 
     public void onClick(View view) {
@@ -87,7 +119,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .setTitle(R.string.dialog_title);
         builder.setPositiveButton(R.string.ok, (dialog, id) -> {
             mMareuApiService.deleteReunion(reunion);
-            initList();
+            initList(mMareuApiService.getReunionList());
         });
         builder.setNegativeButton(R.string.cancel, (dialog, id) -> {
             // User cancelled the dialog

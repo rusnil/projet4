@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.TimePickerDialog;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
 
 import com.example.mareu.di.DI;
 import com.example.mareu.model.Reunion;
@@ -21,6 +22,7 @@ public class AddReunionActivity extends AppCompatActivity implements View.OnClic
     private ActivityAddReunionBinding binding;
     private final MareuApiService mMareuApiService = DI.getMareuApiService();
     String[] listSalle;
+    Calendar dateReunion;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +31,11 @@ public class AddReunionActivity extends AppCompatActivity implements View.OnClic
         View view = binding.getRoot();
         setContentView(view);
         setButton();
+        initCalendar();
+    }
+
+    private void initCalendar(){
+        dateReunion = Calendar.getInstance();
     }
 
     private void setButton() {
@@ -68,12 +75,18 @@ public class AddReunionActivity extends AppCompatActivity implements View.OnClic
             hasError = true;
         }
         if (!hasError){
-            mMareuApiService.addReunion(new Reunion(salle, mail, sujet, heure));
-            finish();
+            if (mMareuApiService.checkReunionDispo(salle, dateReunion)) {
+                Calendar dateFin = (Calendar) dateReunion.clone();
+                dateFin.add(Calendar.MINUTE,45);
+                mMareuApiService.addReunion(new Reunion(salle, mail, sujet, dateReunion, dateFin));
+                finish();
+            } else {
+                Toast.makeText(this, getString(R.string.check_reu_dispo), Toast.LENGTH_SHORT).show();
+            }
         }
     }
 
-    private boolean checkError(TextInputLayout editText, String texte,String message) {
+    private boolean checkError(TextInputLayout editText, String texte, String message) {
         if (texte.isEmpty()) {
             editText.setError(message);
             return true;
@@ -97,12 +110,16 @@ public class AddReunionActivity extends AppCompatActivity implements View.OnClic
     }
 
     private void buttonHeure() {
-        int mHour, mMminute;
-        final Calendar c = Calendar.getInstance();
-        mHour = c.get(Calendar.HOUR_OF_DAY);
-        mMminute = c.get(Calendar.MINUTE);
+        int mHour, mMinute;
+        mHour = dateReunion.get(Calendar.HOUR_OF_DAY);
+        mMinute = dateReunion.get(Calendar.MINUTE);
 
-        TimePickerDialog timePickerDialog = new TimePickerDialog(this, (timePicker, hour, min) -> binding.realbtnheure.setText(hour + ":" + min),mHour,mMminute,true);
+        TimePickerDialog timePickerDialog = new TimePickerDialog(this, (timePicker, hour, min) -> {
+            dateReunion.set(Calendar.HOUR_OF_DAY,hour);
+            dateReunion.set(Calendar.MINUTE,min);
+
+            binding.realbtnheure.setText(hour + "h" + min);
+        },mHour,mMinute,true);
         timePickerDialog.show();
     }
 }

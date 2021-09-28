@@ -9,16 +9,22 @@
     <string name="invalid_email">Email invalide</string>
     <string name="pick_date">Choisir une heure</string>
     <string name="pick_sujet">Choisir un sujet</string>
+    <string name="create_meeting">Créer la réunion</string>
+    <string name="filtre_hours">Filtre par heure</string>
+    <string name="filtre_room">Filtre par salle</string>
+    <string name="filtre_reset">reset le filtre</string>
+    <string name="check_reu_dispo">Changer d\'heure ou de salle !</string>
+
     <string-array name="salle_item">
-        <item>Room 1</item>
-        <item>Room 2</item>
-        <item>Room 3</item>
-        <item>Room 4</item>
-        <item>Room 5</item>
-        <item>Room 6</item>
-        <item>Room 7</item>
-        <item>Room 8</item>
-        <item>Room 9</item>
-        <item>Room 10</item>
+        <item>Salle 1</item>
+        <item>Salle 2</item>
+        <item>Salle 3</item>
+        <item>Salle 4</item>
+        <item>Salle 5</item>
+        <item>Salle 6</item>
+        <item>Salle 7</item>
+        <item>Salle 8</item>
+        <item>Salle 9</item>
+        <item>Salle 10</item>
     </string-array>
 </resources>

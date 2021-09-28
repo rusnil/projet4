@@ -3,7 +3,7 @@ package com.example.mareu.service;
 import com.example.mareu.model.Reunion;
 import com.example.mareu.model.Salle;
 
-import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public interface MareuApiService {
@@ -12,6 +12,7 @@ public interface MareuApiService {
     void addReunion(Reunion reunion);
     void deleteReunion(Reunion reunion);
     List<Salle> getSalleList();
-    List<Reunion> getFiltreDate();
-    List<Reunion> getFiltreLieu();
+    List<Reunion> getFiltreHeure();
+    List<Reunion> getFiltreSalle(String salle);
+    boolean checkReunionDispo(String lieu, Calendar dateDebut);
 }
