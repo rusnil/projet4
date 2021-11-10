@@ -1,6 +1,5 @@
 package com.example.mareu.ui;
 
-
 public class Utilis {
 
     public static boolean isEmailValid(String email) {

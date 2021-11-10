@@ -12,10 +12,19 @@
     <string name="create_meeting">Créer la réunion</string>
     <string name="filtre_hours">Filtre par heure</string>
     <string name="filtre_room">Filtre par salle</string>
-    <string name="filtre_reset">reset le filtre</string>
+    <string name="filtre_reset">Effacer le filtre</string>
     <string name="check_reu_dispo">Changer d\'heure ou de salle !</string>
+    <string name="pick_duration_meeting">Choisir le temps de la réunion</string>
+    <string name="minute">minutes</string>
+    <string name="h">h</string>
+    <string name="subject">sujet</string>
+    <string name="hour">heure</string>
+    <string name="duration">durée</string>
+    <string name="room">salle</string>
+    <string name="image_delete">image delete</string>
+    <string name="image_circle">image circle</string>
 
-    <string-array name="salle_item">
+    <string-array name="room_item">
         <item>Salle 1</item>
         <item>Salle 2</item>
         <item>Salle 3</item>
@@ -26,5 +35,12 @@
         <item>Salle 8</item>
         <item>Salle 9</item>
         <item>Salle 10</item>
+    </string-array>
+
+    <string-array name="duration_meeting">
+        <item>15</item>
+        <item>30</item>
+        <item>45</item>
+        <item>60</item>
     </string-array>
 </resources>

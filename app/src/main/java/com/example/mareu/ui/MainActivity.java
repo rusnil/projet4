@@ -1,8 +1,5 @@
 package com.example.mareu.ui;
 
-import static java.util.Calendar.HOUR_OF_DAY;
-import static java.util.Calendar.MINUTE;
-
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,17 +13,19 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.mareu.di.DI;
-import com.example.mareu.model.Reunion;
+import com.example.mareu.model.Meeting;
 import com.example.mareu.service.MareuApiService;
 import com.example.maru.R;
 import com.example.maru.databinding.ActivityMainBinding;
 
+import java.util.Calendar;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener, ReunionEvent {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener, MeetingEvent {
 
     private ActivityMainBinding binding;
     private final MareuApiService mMareuApiService = DI.getMareuApiService();
+    Calendar hourMeeting;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,13 +34,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         View view = binding.getRoot();
         setContentView(view);
         setButton();
+        initCalendar();
         initRecycler();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        initList(mMareuApiService.getReunionList());
+        initList(mMareuApiService.getMeetingList());
     }
 
     private void initRecycler() {
@@ -49,8 +49,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         binding.recyclerview.setLayoutManager(layoutManager);
     }
 
-    private void initList(List<Reunion> reunions) {
-        RecyclerViewAdapter recyclerViewAdapter = new RecyclerViewAdapter(reunions, this);
+    private void initList(List<Meeting> meetings) {
+        RecyclerViewAdapter recyclerViewAdapter = new RecyclerViewAdapter(meetings, this);
         binding.recyclerview.setAdapter(recyclerViewAdapter);
     }
 
@@ -69,62 +69,70 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
         if (itemId == R.id.filtreHeure) {
-            filtreHeure();
+            filterHour();
             return true;
         } else if (itemId == R.id.filtreSalle) {
-            filtreSalle();
+            filterRoom();
             return true;
         } else if (itemId == R.id.filtreReset) {
-            filtreReset();
+            filterReset();
             return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
-    private void filtreReset() {
-        initList(mMareuApiService.getReunionList());
+    private void filterReset() {
+        initList(mMareuApiService.getMeetingList());
     }
 
-    public void filtreHeure() {
-        TimePickerDialog.OnTimeSetListener timeSetListener = (view, hourOfDay, minute) -> {
+    private void initCalendar(){
+        hourMeeting = Calendar.getInstance();
+    }
 
-        };
-        TimePickerDialog timePickerDialog = new TimePickerDialog(this, timeSetListener, HOUR_OF_DAY, MINUTE, true);
+    public void filterHour() {
+        int mHour, mMinute;
+        mHour = hourMeeting.get(Calendar.HOUR_OF_DAY);
+        mMinute = hourMeeting.get(Calendar.MINUTE);
+
+        TimePickerDialog timePickerDialog = new TimePickerDialog(this, (timePicker, hour, min) -> {
+            hourMeeting.set(Calendar.HOUR_OF_DAY,hour);
+            hourMeeting.set(Calendar.MINUTE,min);
+
+            initList(mMareuApiService.getFilterHour(hour));
+        },mHour,mMinute,true);
         timePickerDialog.show();
     }
 
-    private void filtreSalle() {
-        String[] listSalle = getResources().getStringArray(R.array.salle_item);
+    private void filterRoom() {
+        String[] listRoom = getResources().getStringArray(R.array.room_item);
 
         AlertDialog.Builder mBuilder = new AlertDialog.Builder(this);
         mBuilder.setTitle(R.string.pick_salle);
-        mBuilder.setSingleChoiceItems(listSalle, -1, (dialogInterface, which) -> {
+        mBuilder.setSingleChoiceItems(listRoom, -1, (dialogInterface, which) -> {
             dialogInterface.dismiss();
-            initList(mMareuApiService.getFiltreSalle(listSalle[which]));
+            initList(mMareuApiService.getFilterRoom(listRoom[which]));
         });
         AlertDialog alert = mBuilder.create();
         alert.show();
-
     }
 
     public void onClick(View view) {
-            startActivity(new Intent(this, AddReunionActivity.class));
+            startActivity(new Intent(this, AddMeetingActivity.class));
     }
 
     @Override
-    public void delete(Reunion reunion) {
+    public void delete(Meeting meeting) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this  );
 
         builder.setMessage(R.string.dialog_message)
                 .setTitle(R.string.dialog_title);
         builder.setPositiveButton(R.string.ok, (dialog, id) -> {
-            mMareuApiService.deleteReunion(reunion);
-            initList(mMareuApiService.getReunionList());
+            mMareuApiService.deleteMeeting(meeting);
+            initList(mMareuApiService.getMeetingList());
         });
         builder.setNegativeButton(R.string.cancel, (dialog, id) -> {
             // User cancelled the dialog
         });
-
         AlertDialog dialog = builder.create();
         dialog.show();
     }

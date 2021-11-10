@@ -9,61 +9,64 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.mareu.model.Reunion;
+import com.example.mareu.model.Meeting;
 import com.example.maru.R;
 
 import java.util.List;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
 
-    private final List<Reunion> mReunion;
-    private final ReunionEvent mReunionEvent;
+    private final List<Meeting> mMeeting;
+    private final MeetingEvent mMeetingEvent;
 
-    public RecyclerViewAdapter(List<Reunion> reunionList, ReunionEvent reunionEvent) {
-        this.mReunion = reunionList;
-        this.mReunionEvent = reunionEvent;
+    public RecyclerViewAdapter(List<Meeting> meetingList, MeetingEvent meetingEvent) {
+        this.mMeeting = meetingList;
+        this.mMeetingEvent = meetingEvent;
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.list_reunion, parent, false);
+                .inflate(R.layout.list_meeting, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
-        Reunion reunion = mReunion.get(position);
-        holder.date.setText(reunion.getHeure());
-        holder.lieu.setText(reunion.getLieu());
-        holder.email.setText(reunion.getEmail());
-        holder.sujet.setText(reunion.getSujet());
+        Meeting meeting = mMeeting.get(position);
+        holder.hour.setText(meeting.getHour());
+        holder.room.setText(meeting.getRoom());
+        holder.email.setText(meeting.getEmail());
+        holder.subject.setText(meeting.getSubject());
+        holder.duration.setText(meeting.getDuration() + " minutes ");
 
-        holder.deleteReu.setOnClickListener(view -> mReunionEvent.delete(reunion));
+        holder.deleteMeeting.setOnClickListener(view -> mMeetingEvent.delete(meeting));
     }
 
     @Override
     public int getItemCount() {
-        return mReunion.size();
+        return mMeeting.size();
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
-        public final TextView date;
-        public final TextView lieu;
+        public final TextView hour;
+        public final TextView room;
         public final TextView email;
-        public final TextView sujet;
-        public final ImageButton deleteReu;
+        public final TextView subject;
+        public final TextView duration;
+        public final ImageButton deleteMeeting;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            date = itemView.findViewById(R.id.date);
-            lieu = itemView.findViewById(R.id.lieu);
+            hour = itemView.findViewById(R.id.hour);
+            room = itemView.findViewById(R.id.room);
             email = itemView.findViewById(R.id.email);
-            sujet = itemView.findViewById(R.id.sujet);
-            deleteReu = (ImageButton) itemView.findViewById(R.id.delete_reunion);
+            subject = itemView.findViewById(R.id.subject);
+            duration = itemView.findViewById(R.id.duration);
+            deleteMeeting = itemView.findViewById(R.id.delete_reunion);
         }
     }
 }
