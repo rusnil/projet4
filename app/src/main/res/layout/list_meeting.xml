@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_height="wrap_content">
 
     <ImageView
         android:id="@+id/imgCircle"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_margin="8dp"
+        android:contentDescription="@string/image_circle"
         android:src="@drawable/img_circle"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:contentDescription="@string/image_circle" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/subject"
@@ -20,11 +20,11 @@
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
         android:text="@string/subject"
+        android:textColor="@color/black"
         android:textSize="16sp"
         android:textStyle="bold"
-        android:textColor="@color/black"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toEndOf="@id/imgCircle" />
+        app:layout_constraintStart_toEndOf="@id/imgCircle"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/hour"
@@ -32,11 +32,11 @@
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
         android:text="@string/hour"
+        android:textColor="@color/black"
         android:textSize="16sp"
         android:textStyle="bold"
-        android:textColor="@color/black"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toEndOf="@id/subject" />
+        app:layout_constraintStart_toEndOf="@id/subject"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/duration"
@@ -44,11 +44,11 @@
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
         android:text="@string/duration"
+        android:textColor="@color/black"
         android:textSize="16sp"
         android:textStyle="bold"
-        android:textColor="@color/black"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toEndOf="@id/hour" />
+        app:layout_constraintStart_toEndOf="@id/hour"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/room"
@@ -56,9 +56,9 @@
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
         android:text="@string/room"
+        android:textColor="@color/black"
         android:textSize="16sp"
         android:textStyle="bold"
-        android:textColor="@color/black"
         app:layout_constraintStart_toEndOf="@id/duration"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -69,9 +69,9 @@
         android:layout_marginStart="8dp"
         android:text="@string/email"
         android:textSize="14sp"
-        app:layout_constraintTop_toBottomOf="@id/subject"
+        app:layout_constraintEnd_toStartOf="@id/delete_reunion"
         app:layout_constraintStart_toEndOf="@id/imgCircle"
-        app:layout_constraintEnd_toStartOf="@id/delete_reunion" />
+        app:layout_constraintTop_toBottomOf="@id/subject" />
 
     <ImageButton
         android:id="@+id/delete_reunion"
@@ -79,9 +79,9 @@
         android:layout_height="48dp"
         android:layout_margin="8dp"
         android:background="@null"
-        app:layout_constraintTop_toTopOf="parent"
+        android:contentDescription="@string/image_delete"
         app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@drawable/ic_baseline_delete_24"
-        android:contentDescription="@string/image_delete" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_baseline_delete_24" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

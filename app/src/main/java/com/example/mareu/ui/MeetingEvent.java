@@ -4,5 +4,5 @@ import com.example.mareu.model.Meeting;
 
 public interface MeetingEvent {
 
-    void delete (Meeting meeting);
+    void delete(Meeting meeting);
 }

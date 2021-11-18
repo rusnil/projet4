@@ -5,13 +5,13 @@
     <item
         android:id="@+id/filtreHeure"
         android:title="@string/filtre_hours"
-        app:showAsAction="never"/>
+        app:showAsAction="never" />
     <item
         android:id="@+id/filtreSalle"
         android:title="@string/filtre_room"
-        app:showAsAction="never"/>
+        app:showAsAction="never" />
     <item
         android:id="@+id/filtreReset"
         android:title="@string/filtre_reset"
-        app:showAsAction="never"/>
+        app:showAsAction="never" />
 </menu>

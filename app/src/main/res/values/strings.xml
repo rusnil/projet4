@@ -15,7 +15,7 @@
     <string name="filtre_reset">Effacer le filtre</string>
     <string name="check_reu_dispo">Changer d\'heure ou de salle !</string>
     <string name="pick_duration_meeting">Choisir le temps de la réunion</string>
-    <string name="minute">minutes</string>
+    <string name="minute">%d minutes</string>
     <string name="h">h</string>
     <string name="subject">sujet</string>
     <string name="hour">heure</string>

@@ -23,9 +23,9 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, MeetingEvent {
 
-    private ActivityMainBinding binding;
     private final MareuApiService mMareuApiService = DI.getMareuApiService();
     Calendar hourMeeting;
+    private ActivityMainBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,7 +85,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         initList(mMareuApiService.getMeetingList());
     }
 
-    private void initCalendar(){
+    private void initCalendar() {
         hourMeeting = Calendar.getInstance();
     }
 
@@ -95,11 +95,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mMinute = hourMeeting.get(Calendar.MINUTE);
 
         TimePickerDialog timePickerDialog = new TimePickerDialog(this, (timePicker, hour, min) -> {
-            hourMeeting.set(Calendar.HOUR_OF_DAY,hour);
-            hourMeeting.set(Calendar.MINUTE,min);
+            hourMeeting.set(Calendar.HOUR_OF_DAY, hour);
+            hourMeeting.set(Calendar.MINUTE, min);
 
             initList(mMareuApiService.getFilterHour(hour));
-        },mHour,mMinute,true);
+        }, mHour, mMinute, true);
         timePickerDialog.show();
     }
 
@@ -117,12 +117,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     public void onClick(View view) {
-            startActivity(new Intent(this, AddMeetingActivity.class));
+        startActivity(new Intent(this, AddMeetingActivity.class));
     }
 
     @Override
     public void delete(Meeting meeting) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this  );
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
         builder.setMessage(R.string.dialog_message)
                 .setTitle(R.string.dialog_title);

@@ -13,8 +13,8 @@ public abstract class MareuGenerator {
     static Calendar endHour = (Calendar) startHour.clone();
 
     public static List<Meeting> sMeetingList = Arrays.asList(
-            new Meeting("Salle 1", "JustinA@gmail.fr, JustinB@gmail.fr, JustinC@gmail.fr", "test generator", "30", startHour, endHour),
-            new Meeting("Salle 2", "JustinA@gmail.fr, JustinB@gmail.fr, JustinC@gmail.fr, JustinD@gmail.fr","test generator", "30", startHour, endHour)
+            new Meeting("Salle 1", "JustinA@gmail.fr, JustinB@gmail.fr, JustinC@gmail.fr", "test generator", 30, startHour, endHour),
+            new Meeting("Salle 2", "JustinA@gmail.fr, JustinB@gmail.fr, JustinC@gmail.fr, JustinD@gmail.fr", "test generator", 30, startHour, endHour)
     );
 
     static List<Meeting> generateReunion() {

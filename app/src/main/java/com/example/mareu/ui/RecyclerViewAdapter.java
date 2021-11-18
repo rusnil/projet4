@@ -34,13 +34,12 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-
         Meeting meeting = mMeeting.get(position);
         holder.hour.setText(meeting.getHour());
         holder.room.setText(meeting.getRoom());
         holder.email.setText(meeting.getEmail());
         holder.subject.setText(meeting.getSubject());
-        holder.duration.setText(meeting.getDuration() + " minutes ");
+        holder.duration.setText(holder.duration.getContext().getString(R.string.minute, meeting.getDuration()));
 
         holder.deleteMeeting.setOnClickListener(view -> mMeetingEvent.delete(meeting));
     }
@@ -51,7 +50,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-
         public final TextView hour;
         public final TextView room;
         public final TextView email;

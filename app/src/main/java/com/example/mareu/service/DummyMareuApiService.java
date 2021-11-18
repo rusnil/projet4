@@ -62,7 +62,7 @@ public class DummyMareuApiService implements MareuApiService {
                 if (endHour.(meeting.getStartHour()) && endHour.before(meeting.getEndHour())) {
                     return false;
                 } */
-                if(startHour.getTime().getTime() <= meeting.getEndHour().getTime().getTime()
+                if (startHour.getTime().getTime() <= meeting.getEndHour().getTime().getTime()
                         && meeting.getStartHour().getTime().getTime() <= endHour.getTime().getTime()) {
                     return false;
                 }

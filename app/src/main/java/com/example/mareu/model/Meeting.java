@@ -4,14 +4,14 @@ import java.util.Calendar;
 
 public class Meeting {
 
-    private final String duration;
+    private final int duration;
     private final String subject;
     private final String room;
     private final String email;
     private final Calendar startHour;
     private final Calendar endHour;
 
-    public Meeting(String room, String email, String subject, String duration, Calendar startHour, Calendar endHour) {
+    public Meeting(String room, String email, String subject, int duration, Calendar startHour, Calendar endHour) {
         this.room = room;
         this.email = email;
         this.subject = subject;
@@ -33,8 +33,7 @@ public class Meeting {
     }
 
     public String getHour() {
-        String hour = startHour.get(Calendar.HOUR_OF_DAY)+"h"+ startHour.get(Calendar.MINUTE);
-        return hour;
+        return startHour.get(Calendar.HOUR_OF_DAY) + "h" + startHour.get(Calendar.MINUTE);
     }
 
     public Calendar getStartHour() {
@@ -45,7 +44,7 @@ public class Meeting {
         return endHour;
     }
 
-    public String getDuration() {
+    public int getDuration() {
         return duration;
     }
 }

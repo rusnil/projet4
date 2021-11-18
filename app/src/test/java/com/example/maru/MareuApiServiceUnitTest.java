@@ -22,10 +22,10 @@ import java.util.List;
 @RunWith(JUnit4.class)
 public class MareuApiServiceUnitTest {
 
-    private MareuApiService mMareuApiService;
     Calendar startHour = Calendar.getInstance();
     Calendar endHour = (Calendar) startHour.clone();
-    Meeting mMeeting = new Meeting("salle 1", "test@test.test", "testUnit","30", startHour, endHour);
+    Meeting mMeeting = new Meeting("salle 1", "test@test.test", "testUnit", 30, startHour, endHour);
+    private MareuApiService mMareuApiService;
 
     @Before
     public void setup() {
@@ -52,7 +52,7 @@ public class MareuApiServiceUnitTest {
         Calendar startHourAvailable = Calendar.getInstance();
         Calendar endHourAvailable = (Calendar) startHourAvailable.clone();
         endHourAvailable.add(Calendar.HOUR_OF_DAY, 1);
-        Meeting mMeeting1 = new Meeting("salle 1", "test@test.test", "testUnit","30", startHourAvailable, endHourAvailable);
+        Meeting mMeeting1 = new Meeting("salle 1", "test@test.test", "testUnit", 30, startHourAvailable, endHourAvailable);
         mMareuApiService.addMeeting(mMeeting1);
 
         Calendar startHourAvailable1 = Calendar.getInstance();
@@ -82,7 +82,7 @@ public class MareuApiServiceUnitTest {
     @Test
     public void filterRoomWithSuccess() {
         String room = String.valueOf(R.array.room_item);
-        Meeting meeting = new Meeting(room, "test@test.test", "testUnit","30", startHour, endHour);
+        Meeting meeting = new Meeting(room, "test@test.test", "testUnit", 30, startHour, endHour);
         mMareuApiService.addMeeting(meeting);
         List<Meeting> compare = mMareuApiService.getFilterRoom(room);
         assertTrue(compare.contains(meeting));

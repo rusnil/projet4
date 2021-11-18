@@ -1,14 +1,14 @@
 package com.example.mareu.ui;
 
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.collection.ArraySet;
-
 import android.annotation.SuppressLint;
 import android.app.TimePickerDialog;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.collection.ArraySet;
 
 import com.example.mareu.di.DI;
 import com.example.mareu.model.Meeting;
@@ -24,13 +24,13 @@ import java.util.Set;
 
 public class AddMeetingActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private ActivityAddReunionBinding binding;
     private final MareuApiService mMareuApiService = DI.getMareuApiService();
     String[] listRoom;
     String[] durationMeeting;
     Calendar hourMeeting;
     String duration;
     Set<String> listEmail = new ArraySet<>();
+    private ActivityAddReunionBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,7 +75,7 @@ public class AddMeetingActivity extends AppCompatActivity implements View.OnClic
 
     private void buttonAddEmail() {
         String mail = Objects.requireNonNull(binding.txtEmail.getEditText()).getText().toString();
-        if (Utilis.isEmailValid(mail)) {
+        if (Utils.isEmailValid(mail)) {
             binding.txtEmail.setError("");
             Objects.requireNonNull(binding.txtEmail.getEditText()).setText("");
             if (!listEmail.contains(mail)) {
@@ -119,9 +119,10 @@ public class AddMeetingActivity extends AppCompatActivity implements View.OnClic
         }
         if (!hasError) {
             Calendar endHour = (Calendar) hourMeeting.clone();
-            endHour.add(Calendar.MINUTE, Integer.parseInt(this.duration));
+            int durationInt = Integer.parseInt(this.duration);
+            endHour.add(Calendar.MINUTE, durationInt);
             if (mMareuApiService.checkMeetingAvailable(room, hourMeeting, endHour)) {
-                mMareuApiService.addMeeting(new Meeting(room, joinEmail(), subject, duration, hourMeeting, endHour));
+                mMareuApiService.addMeeting(new Meeting(room, joinEmail(), subject, durationInt, hourMeeting, endHour));
                 finish();
             } else {
                 Toast.makeText(this, getString(R.string.check_reu_dispo), Toast.LENGTH_SHORT).show();
@@ -156,12 +157,13 @@ public class AddMeetingActivity extends AppCompatActivity implements View.OnClic
         mHour = hourMeeting.get(Calendar.HOUR_OF_DAY);
         mMinute = hourMeeting.get(Calendar.MINUTE);
 
-        @SuppressLint("SetTextI18n") TimePickerDialog timePickerDialog = new TimePickerDialog(this, (timePicker, hour, min) -> {
-            hourMeeting.set(Calendar.HOUR_OF_DAY, hour);
-            hourMeeting.set(Calendar.MINUTE, min);
+        @SuppressLint("SetTextI18n") TimePickerDialog timePickerDialog =
+                new TimePickerDialog(this, (timePicker, hour, min) -> {
+                    hourMeeting.set(Calendar.HOUR_OF_DAY, hour);
+                    hourMeeting.set(Calendar.MINUTE, min);
 
-            binding.btnHour.setText(hour + getString(R.string.h) + min);
-        }, mHour, mMinute, true);
+                    binding.btnHour.setText(hour + getString(R.string.h) + min);
+                }, mHour, mMinute, true);
         timePickerDialog.show();
     }
 

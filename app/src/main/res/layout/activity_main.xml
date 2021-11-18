@@ -10,19 +10,19 @@
         android:id="@+id/fab_Add"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_margin="16dp"
         android:clickable="true"
+        android:focusable="true"
+        app:backgroundTint="#FF0000"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_margin="16dp"
-        app:tint="#FFFFFE"
         app:srcCompat="@drawable/ic_baseline_add_24"
-        app:backgroundTint="#FF0000"
-        android:focusable="true" />
+        app:tint="#FFFFFE" />
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/recyclerview"
-        tools:listitem="@layout/list_meeting"/>
+        tools:listitem="@layout/list_meeting" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
